@@ -6,153 +6,177 @@
   <title>HeyNayaa Chat</title>
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #050510;
-      color: white;
-      height: 100vh;
-      display: flex;
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:#050510;
+      color:white;
+      height:100vh;
+      display:flex;
     }
 
-    .sidebar {
-      width: 280px;
-      background: #0d0d18;
-      border-right: 1px solid #222;
-      padding: 24px;
+    .sidebar{
+      width:280px;
+      background:#0d0d18;
+      border-right:1px solid #222;
+      padding:24px;
     }
 
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      margin-bottom: 30px;
+    .logo{
+      font-size:26px;
+      font-weight:bold;
+      margin-bottom:30px;
     }
 
-    .character {
-      padding: 16px;
-      border-radius: 16px;
-      background: #151522;
-      border: 1px solid #a855f7;
+    .gradient{
+      background:linear-gradient(90deg,#a855f7,#ec4899);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
     }
 
-    .chat {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    .character{
+      padding:16px;
+      border-radius:16px;
+      background:#151522;
+      border:1px solid #a855f7;
     }
 
-    .chat-header {
-      padding: 22px 30px;
-      border-bottom: 1px solid #222;
-      background: #080812;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .chat{
+      flex:1;
+      display:flex;
+      flex-direction:column;
     }
 
-    .clear-btn {
-      background: #151522;
-      border: 1px solid #333;
-      padding: 10px 14px;
-      border-radius: 10px;
-      color: #ccc;
-      cursor: pointer;
+    .chat-header{
+      padding:22px 30px;
+      border-bottom:1px solid #222;
+      background:#080812;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
     }
 
-    .messages {
-      flex: 1;
-      padding: 30px;
-      overflow-y: auto;
+    .clear-btn{
+      background:#151522;
+      border:1px solid #333;
+      padding:10px 14px;
+      border-radius:10px;
+      color:#ccc;
+      cursor:pointer;
     }
 
-    .message {
-      max-width: 650px;
-      padding: 16px 20px;
-      border-radius: 18px;
-      margin-bottom: 18px;
-      line-height: 1.5;
+    .messages{
+      flex:1;
+      padding:30px;
+      overflow-y:auto;
     }
 
-    .ai {
-      background: #151522;
-      color: #eee;
+    .message{
+      max-width:650px;
+      padding:16px 20px;
+      border-radius:18px;
+      margin-bottom:18px;
+      line-height:1.5;
     }
 
-    .user {
-      background: linear-gradient(90deg, #7c3aed, #ec4899);
-      margin-left: auto;
+    .ai{
+      background:#151522;
+      color:#eee;
     }
 
-    .typing {
-      opacity: 0.75;
-      font-style: italic;
+    .user{
+      background:linear-gradient(90deg,#7c3aed,#ec4899);
+      margin-left:auto;
     }
 
-    .input-area {
-      display: flex;
-      gap: 12px;
-      padding: 20px;
-      border-top: 1px solid #222;
-      background: #080812;
+    .typing{
+      opacity:.75;
+      font-style:italic;
     }
 
-    input {
-      flex: 1;
-      padding: 16px;
-      border-radius: 14px;
-      border: 1px solid #333;
-      background: #111827;
-      color: white;
-      font-size: 16px;
+    .input-area{
+      display:flex;
+      gap:12px;
+      padding:20px;
+      border-top:1px solid #222;
+      background:#080812;
     }
 
-    button {
-      padding: 16px 28px;
-      border: none;
-      border-radius: 14px;
-      background: linear-gradient(90deg, #7c3aed, #ec4899);
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
+    input{
+      flex:1;
+      padding:16px;
+      border-radius:14px;
+      border:1px solid #333;
+      background:#111827;
+      color:white;
+      font-size:16px;
+      outline:none;
     }
 
-    @media (max-width: 800px) {
-      .sidebar {
-        display: none;
+    button{
+      padding:16px 28px;
+      border:none;
+      border-radius:14px;
+      background:linear-gradient(90deg,#7c3aed,#ec4899);
+      color:white;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    @media(max-width:800px){
+
+      .sidebar{
+        display:none;
       }
 
-      .messages {
-        padding: 18px;
+      .messages{
+        padding:18px;
       }
     }
+
   </style>
 </head>
 
 <body>
 
   <aside class="sidebar">
-    <div class="logo">HeyNayaa</div>
+
+    <div class="logo">
+      <span class="gradient">Hey</span>Nayaa
+    </div>
 
     <div class="character">
       <strong>Nayaa</strong><br />
       Deine KI-Begleiterin
     </div>
+
   </aside>
 
   <main class="chat">
+
     <div class="chat-header">
+
       <div>
         <strong>Nayaa</strong> · KI-Begleiterin
       </div>
 
-      <button class="clear-btn" onclick="clearChat()">
+      <button
+        class="clear-btn"
+        onclick="clearChat()"
+      >
         Verlauf löschen
       </button>
+
     </div>
 
-    <div class="messages" id="Nachrichten"></div>
+    <div
+      class="messages"
+      id="Nachrichten"
+    ></div>
 
     <div class="input-area">
+
       <input
         id="Benutzereingabe"
         placeholder="Schreibe eine Nachricht..."
@@ -162,120 +186,233 @@
       <button onclick="NachrichtSenden()">
         Senden
       </button>
+
     </div>
+
   </main>
 
   <script>
-    const STORAGE_KEY = "nayaa_chat_history";
 
-    let chatHistory = JSON.parse(
-      localStorage.getItem(STORAGE_KEY)
-    ) || [
-      {
-        role: "assistant",
-        content: "Hey, ich bin Nayaa. Ich bin deine KI-Begleiterin. Schön, dass du da bist. Wie war dein Tag?"
-      }
-    ];
+    const STORAGE_KEY =
+      "nayaa_chat_history";
 
-    function saveHistory() {
+    const LIMIT_KEY =
+      "nayaa_message_count";
+
+    const FREE_LIMIT = 20;
+
+    let chatHistory =
+      JSON.parse(
+        localStorage.getItem(STORAGE_KEY)
+      ) || [
+        {
+          role:"assistant",
+          content:
+            "Hey, ich bin Nayaa 💋 Schön, dass du da bist. Wie war dein Tag?"
+        }
+      ];
+
+    function saveHistory(){
+
       localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(chatHistory)
       );
+
     }
 
-    function renderMessages() {
-      const nachrichten = document.getElementById("Nachrichten");
+    function renderMessages(){
+
+      const nachrichten =
+        document.getElementById("Nachrichten");
+
       nachrichten.innerHTML = "";
 
-      chatHistory.forEach((msg) => {
-        const div = document.createElement("div");
-        div.className = msg.role === "user" ? "message user" : "message ai";
-        div.textContent = msg.content;
+      chatHistory.forEach((msg)=>{
+
+        const div =
+          document.createElement("div");
+
+        div.className =
+          msg.role === "user"
+          ? "message user"
+          : "message ai";
+
+        div.textContent =
+          msg.content;
+
         nachrichten.appendChild(div);
+
       });
 
-      nachrichten.scrollTop = nachrichten.scrollHeight;
+      nachrichten.scrollTop =
+        nachrichten.scrollHeight;
     }
 
-    function clearChat() {
+    function clearChat(){
+
       chatHistory = [
         {
-          role: "assistant",
-          content: "Okay, wir starten neu. Ich bin Nayaa. Wie geht es dir gerade?"
+          role:"assistant",
+          content:
+            "Okay 💋 Wir starten neu. Wie geht es dir gerade?"
         }
       ];
 
+      localStorage.setItem(
+        LIMIT_KEY,
+        0
+      );
+
       saveHistory();
+
       renderMessages();
     }
 
-    async function NachrichtSenden() {
-      const eingang = document.getElementById("Benutzereingabe");
-      const nachrichten = document.getElementById("Nachrichten");
-      const message = eingang.value.trim();
+    async function NachrichtSenden(){
 
-      if (!message) return;
+      const eingang =
+        document.getElementById("Benutzereingabe");
+
+      const nachrichten =
+        document.getElementById("Nachrichten");
+
+      const message =
+        eingang.value.trim();
+
+      if(!message) return;
+
+      let count =
+        Number(
+          localStorage.getItem(LIMIT_KEY) || 0
+        );
+
+      if(count >= FREE_LIMIT){
+
+        chatHistory.push({
+          role:"assistant",
+          content:
+            "Du hast dein kostenloses Nachrichtenlimit erreicht 💎"
+        });
+
+        saveHistory();
+
+        renderMessages();
+
+        return;
+      }
+
+      localStorage.setItem(
+        LIMIT_KEY,
+        count + 1
+      );
 
       chatHistory.push({
-        role: "user",
-        content: message
+        role:"user",
+        content:message
       });
 
       saveHistory();
+
       renderMessages();
 
       eingang.value = "";
 
-      const typing = document.createElement("div");
-      typing.className = "message ai typing";
+      const typing =
+        document.createElement("div");
+
+      typing.className =
+        "message ai typing";
+
       typing.id = "typing";
-      typing.textContent = "Nayaa schreibt...";
+
+      typing.textContent =
+        "Nayaa schreibt...";
+
       nachrichten.appendChild(typing);
-      nachrichten.scrollTop = nachrichten.scrollHeight;
 
-      try {
-        const recentMessages = chatHistory.slice(-12);
+      nachrichten.scrollTop =
+        nachrichten.scrollHeight;
 
-        const response = await fetch("/api/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            messages: recentMessages
-          })
-        });
+      try{
 
-        const data = await response.json();
+        const recentMessages =
+          chatHistory.slice(-12);
 
-        document.getElementById("typing")?.remove();
+        const response =
+          await fetch("/api/chat",{
+
+            method:"POST",
+
+            headers:{
+              "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+              messages:recentMessages
+            })
+
+          });
+
+        const data =
+          await response.json();
+
+        document
+          .getElementById("typing")
+          ?.remove();
 
         const reply =
-          data.reply || "Nayaa konnte gerade nicht antworten.";
+          data.reply ||
+          "Nayaa konnte gerade nicht antworten.";
 
         chatHistory.push({
-          role: "assistant",
-          content: reply
+          role:"assistant",
+          content:reply
         });
 
         saveHistory();
+
         renderMessages();
 
-      } catch (error) {
-        document.getElementById("typing")?.remove();
+      }catch(error){
+
+        document
+          .getElementById("typing")
+          ?.remove();
 
         chatHistory.push({
-          role: "assistant",
-          content: "Nayaa ist gerade nicht erreichbar."
+          role:"assistant",
+          content:
+            "Nayaa ist gerade nicht erreichbar."
         });
 
         saveHistory();
+
         renderMessages();
       }
+
     }
 
     renderMessages();
+
+    const startMessage =
+      localStorage.getItem(
+        "nayaa_start_message"
+      );
+
+    if(startMessage){
+
+      document.getElementById(
+        "Benutzereingabe"
+      ).value = startMessage;
+
+      localStorage.removeItem(
+        "nayaa_start_message"
+      );
+
+      NachrichtSenden();
+    }
+
   </script>
 
 </body>
