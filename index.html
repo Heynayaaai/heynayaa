@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HeyNayaa</title>
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+    *{margin:0;padding:0;box-sizing:border-box}
 
     body{
       font-family:Arial,sans-serif;
@@ -21,24 +17,18 @@
 
     .bg-glow{
       position:fixed;
-      width:600px;
-      height:600px;
+      width:700px;
+      height:700px;
       background:#7c3aed;
       filter:blur(180px);
-      opacity:0.25;
+      opacity:.3;
       top:-200px;
       right:-200px;
       z-index:-1;
     }
 
     nav{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
       padding:30px 8%;
-    }
-
-    .logo{
       font-size:28px;
       font-weight:bold;
     }
@@ -46,8 +36,8 @@
     .hero{
       min-height:90vh;
       display:flex;
-      justify-content:center;
       align-items:center;
+      justify-content:center;
       text-align:center;
       padding:40px;
     }
@@ -56,9 +46,26 @@
       max-width:900px;
     }
 
+    .nayaa{
+      font-size:70px;
+      margin-bottom:15px;
+    }
+
+    .kiss{
+      font-size:54px;
+      margin-bottom:20px;
+      animation:pulse 2s infinite;
+    }
+
+    @keyframes pulse{
+      0%{transform:scale(1)}
+      50%{transform:scale(1.08)}
+      100%{transform:scale(1)}
+    }
+
     h1{
-      font-size:80px;
-      line-height:1;
+      font-size:76px;
+      line-height:1.05;
       margin-bottom:25px;
     }
 
@@ -72,95 +79,60 @@
       font-size:22px;
       color:#b3b3b3;
       line-height:1.6;
-      margin-bottom:40px;
+      margin-bottom:38px;
     }
 
-    .buttons{
+    .chatbar{
       display:flex;
-      justify-content:center;
-      gap:20px;
-      flex-wrap:wrap;
-    }
-
-    .btn{
-      padding:18px 38px;
-      border-radius:14px;
-      border:none;
-      font-size:18px;
-      cursor:pointer;
-      transition:0.3s;
-    }
-
-    .primary{
-      background:linear-gradient(90deg,#7c3aed,#ec4899);
-      color:white;
-    }
-
-    .secondary{
-      background:#111827;
-      color:white;
+      gap:12px;
+      max-width:720px;
+      margin:0 auto;
+      background:#0d0d18;
       border:1px solid #2b2b2b;
+      border-radius:22px;
+      padding:12px;
+      box-shadow:0 0 40px rgba(168,85,247,.25);
     }
 
-    .btn:hover{
-      transform:translateY(-3px);
-      opacity:0.95;
+    .chatbar input{
+      flex:1;
+      background:#111827;
+      border:1px solid #333;
+      color:white;
+      padding:18px 20px;
+      border-radius:16px;
+      font-size:17px;
+      outline:none;
     }
 
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:30px;
-      padding:80px 8%;
-    }
-
-    .card{
-      background:#11111a;
-      border:1px solid #222;
-      border-radius:24px;
-      padding:30px;
-      transition:0.3s;
-    }
-
-    .card:hover{
-      transform:translateY(-5px);
-      border-color:#7c3aed;
-    }
-
-    .avatar{
-      width:70px;
-      height:70px;
-      border-radius:50%;
+    .chatbar button{
+      border:none;
+      border-radius:16px;
+      padding:18px 28px;
       background:linear-gradient(90deg,#7c3aed,#ec4899);
-      margin-bottom:20px;
+      color:white;
+      font-weight:bold;
+      font-size:17px;
+      cursor:pointer;
     }
 
-    .card h3{
-      font-size:28px;
-      margin-bottom:10px;
-    }
-
-    .card p{
-      color:#aaa;
-      line-height:1.6;
+    .hint{
+      margin-top:18px;
+      color:#777;
+      font-size:14px;
     }
 
     footer{
-      padding:60px;
+      padding:40px;
       text-align:center;
       color:#666;
     }
 
     @media(max-width:768px){
-
-      h1{
-        font-size:50px;
-      }
-
-      .subtitle{
-        font-size:18px;
-      }
-
+      h1{font-size:46px}
+      .nayaa{font-size:50px}
+      .chatbar{flex-direction:column}
+      .chatbar button{width:100%}
     }
   </style>
 </head>
@@ -169,78 +141,58 @@
 
 <div class="bg-glow"></div>
 
-<nav>
-  <div class="logo">HeyNayaa</div>
-</nav>
+<nav>HeyNayaa</nav>
 
 <section class="hero">
-
   <div class="hero-content">
 
+    <div class="nayaa">Nayaa</div>
+    <div class="kiss">💋</div>
+
     <h1>
-      Meet your next
-      <span class="gradient">AI Companion</span>
+      Schreib deiner
+      <span class="gradient">KI-Begleiterin</span>
     </h1>
 
     <p class="subtitle">
-      Emotionally intelligent AI personalities that
-      chat, remember and connect with you naturally.
+      Nayaa ist warmherzig, aufmerksam und immer bereit für ein persönliches Gespräch.
     </p>
 
-    <div class="buttons">
-      <a href="chat.html" class="btn primary">
-  Start Chatting
-</a>
+    <div class="chatbar">
+      <input
+        id="startMessage"
+        placeholder="Schreib Nayaa etwas..."
+        onkeydown="if(event.key === 'Enter') startChat()"
+      />
 
-      <button class="btn secondary">
-        Explore Characters
+      <button onclick="startChat()">
+        Senden
       </button>
     </div>
 
+    <div class="hint">
+      Nayaa ist eine KI-Begleiterin.
+    </div>
+
   </div>
-
-</section>
-
-<section class="cards">
-
-  <div class="card">
-    <div class="avatar"></div>
-
-    <h3>Luna</h3>
-
-    <p>
-      Soft, emotional and deeply caring.
-      Always there when you need someone.
-    </p>
-  </div>
-
-  <div class="card">
-    <div class="avatar"></div>
-
-    <h3>Ivy</h3>
-
-    <p>
-      Confident, intelligent and flirtatious.
-      Sharp conversations and playful energy.
-    </p>
-  </div>
-
-  <div class="card">
-    <div class="avatar"></div>
-
-    <h3>Aria</h3>
-
-    <p>
-      Sweet, loyal and emotionally attentive.
-      Your calming digital companion.
-    </p>
-  </div>
-
 </section>
 
 <footer>
   © 2026 HeyNayaa AI
 </footer>
+
+<script>
+  function startChat(){
+    const input = document.getElementById("startMessage");
+    const message = input.value.trim();
+
+    if(message){
+      localStorage.setItem("nayaa_start_message", message);
+    }
+
+    window.location.href = "chat.html";
+  }
+</script>
 
 </body>
 </html>
