@@ -152,25 +152,27 @@
   </main>
 
   <script>
-    function sendMessage() {
-      const input = document.getElementById("userInput");
-      const messages = document.getElementById("messages");
+    nachrichten.scrollTop =
+      nachrichten.scrollHeight;
 
-      if (!input.value.trim()) return;
+  } catch (error) {
 
-      const userMsg = document.createElement("div");
-      userMsg.className = "message user";
-      userMsg.textContent = input.value;
-      messages.appendChild(userMsg);
+    const errorMsg =
+      document.createElement("div");
 
-      const aiMsg = document.createElement("div");
-      aiMsg.className = "message ai";
-      aiMsg.textContent = "Das ist erstmal eine Demo-Antwort. Als Nächstes verbinden wir hier echte KI.";
-      messages.appendChild(aiMsg);
+    errorMsg.className =
+      "Nachrichten-KI";
 
-      input.value = "";
-      messages.scrollTop = messages.scrollHeight;
-    }
+    errorMsg.textContent =
+      "Nayaa ist gerade nicht erreichbar.";
+
+    nachrichten.appendChild(errorMsg);
+
+  }
+
+}
+
+</script>
   </script>
 
 </body>
