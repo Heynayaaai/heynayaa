@@ -45,6 +45,18 @@
       padding: 22px 30px;
       border-bottom: 1px solid #222;
       background: #080812;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .clear-btn {
+      background: #151522;
+      border: 1px solid #333;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: #ccc;
+      cursor: pointer;
     }
 
     .messages {
@@ -108,6 +120,10 @@
       .sidebar {
         display: none;
       }
+
+      .messages {
+        padding: 18px;
+      }
     }
   </style>
 </head>
@@ -125,14 +141,16 @@
 
   <main class="chat">
     <div class="chat-header">
-      <strong>Nayaa</strong> · KI-Begleiterin
+      <div>
+        <strong>Nayaa</strong> · KI-Begleiterin
+      </div>
+
+      <button class="clear-btn" onclick="clearChat()">
+        Verlauf löschen
+      </button>
     </div>
 
-    <div class="messages" id="Nachrichten">
-      <div class="message ai">
-        Hey, ich bin Nayaa. Ich bin deine KI-Begleiterin. Schön, dass du da bist. Wie war dein Tag?
-      </div>
-    </div>
+    <div class="messages" id="Nachrichten"></div>
 
     <div class="input-area">
       <input
@@ -148,6 +166,50 @@
   </main>
 
   <script>
+    const STORAGE_KEY = "nayaa_chat_history";
+
+    let chatHistory = JSON.parse(
+      localStorage.getItem(STORAGE_KEY)
+    ) || [
+      {
+        role: "assistant",
+        content: "Hey, ich bin Nayaa. Ich bin deine KI-Begleiterin. Schön, dass du da bist. Wie war dein Tag?"
+      }
+    ];
+
+    function saveHistory() {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(chatHistory)
+      );
+    }
+
+    function renderMessages() {
+      const nachrichten = document.getElementById("Nachrichten");
+      nachrichten.innerHTML = "";
+
+      chatHistory.forEach((msg) => {
+        const div = document.createElement("div");
+        div.className = msg.role === "user" ? "message user" : "message ai";
+        div.textContent = msg.content;
+        nachrichten.appendChild(div);
+      });
+
+      nachrichten.scrollTop = nachrichten.scrollHeight;
+    }
+
+    function clearChat() {
+      chatHistory = [
+        {
+          role: "assistant",
+          content: "Okay, wir starten neu. Ich bin Nayaa. Wie geht es dir gerade?"
+        }
+      ];
+
+      saveHistory();
+      renderMessages();
+    }
+
     async function NachrichtSenden() {
       const eingang = document.getElementById("Benutzereingabe");
       const nachrichten = document.getElementById("Nachrichten");
@@ -155,10 +217,13 @@
 
       if (!message) return;
 
-      const userMsg = document.createElement("div");
-      userMsg.className = "message user";
-      userMsg.textContent = message;
-      nachrichten.appendChild(userMsg);
+      chatHistory.push({
+        role: "user",
+        content: message
+      });
+
+      saveHistory();
+      renderMessages();
 
       eingang.value = "";
 
@@ -167,37 +232,50 @@
       typing.id = "typing";
       typing.textContent = "Nayaa schreibt...";
       nachrichten.appendChild(typing);
-
       nachrichten.scrollTop = nachrichten.scrollHeight;
 
       try {
+        const recentMessages = chatHistory.slice(-12);
+
         const response = await fetch("/api/chat", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ message })
+          body: JSON.stringify({
+            messages: recentMessages
+          })
         });
 
         const data = await response.json();
 
         document.getElementById("typing")?.remove();
 
-        const aiMsg = document.createElement("div");
-        aiMsg.className = "message ai";
-        aiMsg.textContent = data.reply || "Nayaa konnte gerade nicht antworten.";
-        nachrichten.appendChild(aiMsg);
+        const reply =
+          data.reply || "Nayaa konnte gerade nicht antworten.";
 
-        nachrichten.scrollTop = nachrichten.scrollHeight;
+        chatHistory.push({
+          role: "assistant",
+          content: reply
+        });
+
+        saveHistory();
+        renderMessages();
+
       } catch (error) {
         document.getElementById("typing")?.remove();
 
-        const errorMsg = document.createElement("div");
-        errorMsg.className = "message ai";
-        errorMsg.textContent = "Nayaa ist gerade nicht erreichbar.";
-        nachrichten.appendChild(errorMsg);
+        chatHistory.push({
+          role: "assistant",
+          content: "Nayaa ist gerade nicht erreichbar."
+        });
+
+        saveHistory();
+        renderMessages();
       }
     }
+
+    renderMessages();
   </script>
 
 </body>
