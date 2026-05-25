@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HeyNayaa Chat</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #050510;
+      color: white;
+      height: 100vh;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 280px;
+      background: #0d0d18;
+      border-right: 1px solid #222;
+      padding: 24px;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .character {
+      padding: 16px;
+      border-radius: 16px;
+      background: #151522;
+      margin-bottom: 14px;
+      cursor: pointer;
+      border: 1px solid #222;
+    }
+
+    .character:hover,
+    .active {
+      border-color: #a855f7;
+      background: #1d1230;
+    }
+
+    .chat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      padding: 22px 30px;
+      border-bottom: 1px solid #222;
+      background: #080812;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .message {
+      max-width: 650px;
+      padding: 16px 20px;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .ai {
+      background: #151522;
+      color: #eee;
+    }
+
+    .user {
+      background: linear-gradient(90deg, #7c3aed, #ec4899);
+      margin-left: auto;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 12px;
+      padding: 20px;
+      border-top: 1px solid #222;
+      background: #080812;
+    }
+
+    input {
+      flex: 1;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid #333;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 16px 28px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #7c3aed, #ec4899);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+      .sidebar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="logo">HeyNayaa</div>
+
+    <div class="character active">
+      <strong>Luna</strong><br />
+      Soft & emotional
+    </div>
+
+    <div class="character">
+      <strong>Ivy</strong><br />
+      Confident & playful
+    </div>
+
+    <div class="character">
+      <strong>Aria</strong><br />
+      Sweet & loyal
+    </div>
+  </aside>
+
+  <main class="chat">
+    <div class="chat-header">
+      <strong>Luna</strong> · AI Companion
+    </div>
+
+    <div class="messages" id="messages">
+      <div class="message ai">
+        Hey, ich bin Luna. Schön, dass du da bist. Worüber möchtest du sprechen?
+      </div>
+    </div>
+
+    <div class="input-area">
+      <input id="userInput" placeholder="Schreib eine Nachricht..." />
+      <button onclick="sendMessage()">Senden</button>
+    </div>
+  </main>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const messages = document.getElementById("messages");
+
+      if (!input.value.trim()) return;
+
+      const userMsg = document.createElement("div");
+      userMsg.className = "message user";
+      userMsg.textContent = input.value;
+      messages.appendChild(userMsg);
+
+      const aiMsg = document.createElement("div");
+      aiMsg.className = "message ai";
+      aiMsg.textContent = "Das ist erstmal eine Demo-Antwort. Als Nächstes verbinden wir hier echte KI.";
+      messages.appendChild(aiMsg);
+
+      input.value = "";
+      messages.scrollTop = messages.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
