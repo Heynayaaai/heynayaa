@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HeyNayaa Chat</title>
+
   <style>
     body {
       margin: 0;
@@ -31,15 +32,7 @@
       padding: 16px;
       border-radius: 16px;
       background: #151522;
-      margin-bottom: 14px;
-      cursor: pointer;
-      border: 1px solid #222;
-    }
-
-    .character:hover,
-    .active {
-      border-color: #a855f7;
-      background: #1d1230;
+      border: 1px solid #a855f7;
     }
 
     .chat {
@@ -113,67 +106,80 @@
     }
   </style>
 </head>
+
 <body>
 
   <aside class="sidebar">
     <div class="logo">HeyNayaa</div>
 
-    <div class="character active">
-      <strong>Luna</strong><br />
-      Soft & emotional
-    </div>
-
     <div class="character">
-      <strong>Ivy</strong><br />
-      Confident & playful
-    </div>
-
-    <div class="character">
-      <strong>Aria</strong><br />
-      Sweet & loyal
+      <strong>Nayaa</strong><br />
+      Deine KI-Begleiterin
     </div>
   </aside>
 
   <main class="chat">
     <div class="chat-header">
-      <strong>Luna</strong> · AI Companion
+      <strong>Nayaa</strong> · KI-Begleiterin
     </div>
 
-    <div class="messages" id="messages">
+    <div class="messages" id="Nachrichten">
       <div class="message ai">
-        Hey, ich bin Luna. Schön, dass du da bist. Worüber möchtest du sprechen?
+        Hey, ich bin Nayaa. Ich bin deine KI-Begleiterin. Schön, dass du da bist. Wie war dein Tag?
       </div>
     </div>
 
     <div class="input-area">
+      <input
+        id="Benutzereingabe"
+        placeholder="Schreibe eine Nachricht..."
+      />
+
       <button onclick="NachrichtSenden()">
-Senden
-</button>
+        Senden
+      </button>
     </div>
   </main>
 
   <script>
-    nachrichten.scrollTop =
-      nachrichten.scrollHeight;
+    async function NachrichtSenden() {
+      const eingang = document.getElementById("Benutzereingabe");
+      const nachrichten = document.getElementById("Nachrichten");
+      const message = eingang.value.trim();
 
-  } catch (error) {
+      if (!message) return;
 
-    const errorMsg =
-      document.createElement("div");
+      const userMsg = document.createElement("div");
+      userMsg.className = "message user";
+      userMsg.textContent = message;
+      nachrichten.appendChild(userMsg);
 
-    errorMsg.className =
-      "Nachrichten-KI";
+      eingang.value = "";
 
-    errorMsg.textContent =
-      "Nayaa ist gerade nicht erreichbar.";
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message })
+        });
 
-    nachrichten.appendChild(errorMsg);
+        const data = await response.json();
 
-  }
+        const aiMsg = document.createElement("div");
+        aiMsg.className = "message ai";
+        aiMsg.textContent = data.reply || "Nayaa konnte gerade nicht antworten.";
+        nachrichten.appendChild(aiMsg);
 
-}
-
-</script>
+        nachrichten.scrollTop = nachrichten.scrollHeight;
+      } catch (error) {
+        const errorMsg = document.createElement("div");
+        errorMsg.className = "message ai";
+        errorMsg.textContent = "Nayaa ist gerade nicht erreichbar.";
+        nachrichten.appendChild(errorMsg);
+      }
+    }
   </script>
 
 </body>
