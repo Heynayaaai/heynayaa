@@ -71,6 +71,11 @@
       margin-left: auto;
     }
 
+    .typing {
+      opacity: 0.75;
+      font-style: italic;
+    }
+
     .input-area {
       display: flex;
       gap: 12px;
@@ -133,6 +138,7 @@
       <input
         id="Benutzereingabe"
         placeholder="Schreibe eine Nachricht..."
+        onkeydown="if(event.key === 'Enter') NachrichtSenden()"
       />
 
       <button onclick="NachrichtSenden()">
@@ -156,6 +162,14 @@
 
       eingang.value = "";
 
+      const typing = document.createElement("div");
+      typing.className = "message ai typing";
+      typing.id = "typing";
+      typing.textContent = "Nayaa schreibt...";
+      nachrichten.appendChild(typing);
+
+      nachrichten.scrollTop = nachrichten.scrollHeight;
+
       try {
         const response = await fetch("/api/chat", {
           method: "POST",
@@ -167,6 +181,8 @@
 
         const data = await response.json();
 
+        document.getElementById("typing")?.remove();
+
         const aiMsg = document.createElement("div");
         aiMsg.className = "message ai";
         aiMsg.textContent = data.reply || "Nayaa konnte gerade nicht antworten.";
@@ -174,6 +190,8 @@
 
         nachrichten.scrollTop = nachrichten.scrollHeight;
       } catch (error) {
+        document.getElementById("typing")?.remove();
+
         const errorMsg = document.createElement("div");
         errorMsg.className = "message ai";
         errorMsg.textContent = "Nayaa ist gerade nicht erreichbar.";
